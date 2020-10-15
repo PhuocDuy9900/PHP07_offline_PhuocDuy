@@ -4,13 +4,7 @@ require_once('data.php');
 $xhtml       = '';
 $classActive = '';
 // lay gia tri keyLevelTwo de so sanh truoc khi tao the cha (about)
-foreach ($arrMenu as $keyLevelOne => $activeLevelOne) {
-    if (isset($activeLevelOne['child'])) {
-        foreach ($activeLevelOne['child'] as $keyLevelTwo => $activeLevelTwo) {
-            $active[] = $activeLevelTwo['child'];
-        }
-    }
-}
+
 
 // tao menu
 foreach ($arrMenu as $keyLevelOne => $menuLevelOne) {
@@ -19,8 +13,11 @@ foreach ($arrMenu as $keyLevelOne => $menuLevelOne) {
         $classActive = ($menuCurrent == $keyLevelOne) ? 'class="active"' : '';
 
         if (isset($menuLevelOne['child'][$menuCurrent])) $classActive = 'class="active"';
-        foreach($active as $key => $value) {
-            if(isset($value[$menuCurrent])) $classActive = 'class="active"';
+        // foreach($active as $key => $value) {
+        //     if(isset($value[$menuCurrent])) $classActive = 'class="active"';
+        // }
+        foreach($menuLevelOne['child'] as $menuLevelTwo) {
+            if(isset($menuLevelTwo['child'][$menuCurrent])) $classActive = 'class="active"';
         }
 
         $xhtml .= sprintf('<li %s><a href="%s">%s</a><ul>', $classActive, $menuLevelOne['link'], $menuLevelOne['name']);
