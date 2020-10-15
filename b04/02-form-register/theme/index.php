@@ -2,7 +2,7 @@
 require 'html/functions.php';
 $inputName             = createInput('text','name','input--style-2','Name');
 $inputRegistrationCode = createInput('text','res_code','input--style-2','Registration Code');
-$selectBoxGender       = createSelectBox('gender', $gender, 'male');
+$selectBoxGender       = createSelectBox('gender', $gender, '3');
 $selectBoxClass       = createSelectBox('class', $class);
 ?>
 <!DOCTYPE html>

@@ -1,9 +1,9 @@
 <?php
 $gender = array(
     'default' => 'Gender',
-    'male' => 'Male',
-    'female' => 'Female',
-    'other' => 'Other',
+    '1' => 'Male',
+    '2' => 'Female',
+    '3' => 'Other',
 );
 $class = array(
     'default' => 'Class',
