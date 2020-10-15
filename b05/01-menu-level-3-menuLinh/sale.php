@@ -10,6 +10,7 @@
    <?php require_once('html/menu.php') ?>
    <?php require_once('html/breadcrumb.php') ?>
    <h3>Sale</h3>
+   <?php require_once('html/script.php') ?>
 </body>
 
 </html>

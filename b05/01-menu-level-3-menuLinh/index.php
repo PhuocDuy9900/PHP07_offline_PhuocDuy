@@ -11,6 +11,8 @@
    <?php require_once('html/menu.php') ?>
    <?php require_once('html/breadcrumb.php') ?>
    <h3>Home</h3>
+
+   <?php require_once('html/script.php') ?>
 </body>
 
 </html>
