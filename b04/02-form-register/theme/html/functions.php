@@ -15,20 +15,17 @@ function createSelectBox($class, $data, $keySelect = "default")
     $classSelect = '';
     $xhtml .= sprintf('<select name="%s">',$class);
     foreach ($data as $key => $value) {
-        // if($key == 'default') {
-        //     $classSelect = 'disabled="disabled" selected="selected"';
-        //     $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
-        //     $classSelect = '';
-        // } else if ($keySelect == $key) {
-        //     $classSelect = 'selected="selected"';
-        //     $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
-        //     $classSelect = '';
-        // } else {
-        //     $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
-        // }
-        $classSelect = ($key == 'default') ? 'disabled="disabled" selected="selected"' : '';
-        $classSelect = ($key == $keySelect) ? 'disabled="disabled" selected="selected"' : '';
-        $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
+        if($key == 'default') {
+            $classSelect = 'disabled="disabled" selected="selected"';
+            $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
+            $classSelect = '';
+        } else if ($keySelect == $key) {
+            $classSelect = 'selected="selected"';
+            $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
+            $classSelect = '';
+        } else {
+            $xhtml      .= sprintf('<option value="%s" %s>%s</option>',$key,$classSelect,$value);
+        }
     }
     $xhtml .= '</select>';
     return $xhtml;
