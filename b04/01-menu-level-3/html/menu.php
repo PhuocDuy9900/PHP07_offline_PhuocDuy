@@ -14,10 +14,13 @@ foreach ($arrMenu as $keyLevelOne => $menuLevelOne) {
 
         if (isset($menuLevelOne['child'][$menuCurrent])) $classActive = 'class="active"';
         // foreach($active as $key => $value) {
+        // echo '<pre>';
+        // print_r($value);
+        // echo '</pre>';
         //     if(isset($value[$menuCurrent])) $classActive = 'class="active"';
         // }
-        foreach($menuLevelOne['child'] as $menuLevelTwo) {
-            if(isset($menuLevelTwo['child'][$menuCurrent])) $classActive = 'class="active"';
+        foreach ($menuLevelOne['child'] as $menuLevelTwo) {
+            if (isset($menuLevelTwo['child'][$menuCurrent])) $classActive = 'class="active"';
         }
 
         $xhtml .= sprintf('<li %s><a href="%s">%s</a><ul>', $classActive, $menuLevelOne['link'], $menuLevelOne['name']);
