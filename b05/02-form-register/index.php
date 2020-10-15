@@ -21,7 +21,7 @@ $job = array(
 
 
 $arrElementInForm = [
-    createSelectbox('sex', $gender, 'female'),
+    createSelectbox('sex', $gender),
     createSelectbox('job', $job, 'student'), 
     createInput('text','name', 'input--style-2', 'FullName'),
     createInput('text','age', 'input--style-2', 'Age'),
@@ -30,7 +30,7 @@ $arrElementInForm = [
 
 $xhtmlForm = '';
 foreach ($arrElementInForm as $element) {
-    $xhtmlForm .= '<div class="input-group abc">' . $element . '</div>';
+    $xhtmlForm .= sprintf('<div class="input-group abc">%s</div>', $element);
 }
 ?>
 
