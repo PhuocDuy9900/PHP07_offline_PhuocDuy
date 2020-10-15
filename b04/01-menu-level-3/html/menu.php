@@ -11,6 +11,7 @@ foreach ($arrMenu as $keyLevelOne => $activeLevelOne) {
         }
     }
 }
+
 // tao menu
 foreach ($arrMenu as $keyLevelOne => $menuLevelOne) {
     if (isset($menuLevelOne['child'])) {
@@ -18,10 +19,11 @@ foreach ($arrMenu as $keyLevelOne => $menuLevelOne) {
         $classActive = ($menuCurrent == $keyLevelOne) ? 'class="active"' : '';
 
         if (isset($menuLevelOne['child'][$menuCurrent])) $classActive = 'class="active"';
-        if (isset($active[0][$menuCurrent]) || isset($active[1][$menuCurrent])) $classActive = 'class="active"';
+        foreach($active as $key => $value) {
+            if(isset($value[$menuCurrent])) $classActive = 'class="active"';
+        }
 
         $xhtml .= sprintf('<li %s><a href="%s">%s</a><ul>', $classActive, $menuLevelOne['link'], $menuLevelOne['name']);
-        $classActive = '';
         foreach ($menuLevelOne['child'] as $keyLevelTwo => $menuLevelTwo) {
             if (isset($menuLevelTwo['child'])) {
 
