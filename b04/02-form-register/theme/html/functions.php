@@ -9,7 +9,7 @@ function createInput($type, $name, $class, $placeholder = 'Enter here')
 // input--style-2
 require_once 'data.php';
 
-function createSelectBox($class,$keySelect, $data)
+function createSelectBox($class, $data, $keySelect = "default")
 {
     $xhtml  = '';
     $classSelect = '';
