@@ -27,15 +27,15 @@ require_once('data.php');
 //     }
 // }
 
-function recursive($arr,$data = 'data-name')
+function recursiveMenu($arr, $data = 'data-name')
 {
     $xhtml       = '';
     foreach ($arr as $key => $menu) {
+        
         if (isset($menu['child'])) {
-
-            $xhtml .= sprintf('<li %s="%s"><a href="%s">%s</a><ul>', $data, $key, $menu['link'], $menu['name']);
-            $xhtml .= recursive($menu['child'], 'data-parent');
-            $xhtml .= '</ul></li>';
+            $xhtml    .= sprintf('<li %s="%s"><a href="%s">%s</a><ul>', $data, $key, $menu['link'], $menu['name']);
+            $xhtml    .= recursiveMenu($menu['child'], 'data-parent');
+            $xhtml    .= '</ul></li>';
         } else {
             $xhtml .= sprintf('<li %s="%s"><a href="%s">%s</a></li>', $data, $key, $menu['link'], $menu['name']);
         }
@@ -47,7 +47,7 @@ function recursive($arr,$data = 'data-name')
 <div class="menuBackground">
     <div class="center">
         <ul class="dropDownMenu">
-            <?php echo recursive($arrMenu,'data-name'); ?>
+            <?php echo recursiveMenu($arrMenu); ?>
         </ul>
     </div>
 </div>
