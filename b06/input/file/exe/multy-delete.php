@@ -16,7 +16,7 @@
 			$content = explode('||',$content);
 			$image   = $content[2];
 			@unlink(DIR_IMAGES.$image);
-			@unlink("./files/$value.txt");
+			@unlink(DIR_FILES.$value.".txt");
 		}
 	}
 ?>
