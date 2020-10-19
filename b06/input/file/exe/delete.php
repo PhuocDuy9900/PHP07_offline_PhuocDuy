@@ -27,6 +27,7 @@
 	if(isset($_POST['id'])){
 		$id	= $_POST['id'];
 		@unlink(DIR_FILES."$id.txt");
+		@unlink(DIR_IMAGES.$image);
 		$flag = true;
 	}
 ?>
@@ -49,7 +50,7 @@
 			</div>
 			<div class="row">
 				<p>Images:</p>
-				<span><img src="images/<?=$image?>" style="width: 700px;" alt=""></span>
+				<span><img src="<?=DIR_IMAGES.$image?>" style="width: 700px;" alt=""></span>
 			</div>
 			<div class="row">
 				<input type="hidden" name="id" value="<?php echo $id;?>">

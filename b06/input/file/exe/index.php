@@ -43,7 +43,7 @@
 						</p>
 						<p class="name"><?= $tile; ?><span><?= $description; ?></span></p>
 						<p class="id"><?= $id; ?></p>
-						<p style="width: 200px;" class="id"><img src="images/<?=$image?>" width="100%" alt=""></p>
+						<p style="width: 200px;" class="id"><img src="<?=DIR_IMAGES.$image?>" width="100%" alt=""></p>
 						<p class="size"><?= $size; ?></p>
 						<p class="action">
 							<a href="edit.php?id=<?= $id; ?>">Edit</a> |
