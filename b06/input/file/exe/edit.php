@@ -15,14 +15,15 @@
 </head>
 <body>
 <?php
+	require_once 'define.php';
 	require_once 'functions.php';
-	
+	error_reporting(E_ALL & ~E_NOTICE);
 	$id	= $_GET['id'];
-	$content	= file_get_contents("./files/$id.txt");
+	$content	= file_get_contents(DIR_FILES."$id.txt");
 	$content	= explode('||', $content);
 	$title				= $content[0];
 	$description		= $content[1];
-	
+	$image				= $content[2];
 	$flag	= false;
 	if(isset($_POST['title']) && isset($_POST['description'])){
 		$title			= $_POST['title'];
@@ -41,9 +42,9 @@
 		
 		// A-Z, a-z, 0-9: AzG09
 		if($errorTitle == '' && $errorDescription == ''){
-			$data	= $title . '||' . $description;
+			$data	= $title . '||' . $description . '||' .$image;
 			
-			$filename	= './files/' . $id . '.txt';
+			$filename	= DIR_FILES . $id . '.txt';
 			if(file_put_contents($filename, $data)){
 				$title			= '';
 				$description	= '';
@@ -51,7 +52,7 @@
 			}
 		}
 		
-	} 
+	}
 ?>
 	<div id="wrapper">
     	<div class="title">PHP FILE - ADD</div>
@@ -59,16 +60,19 @@
 			<form action="#" method="post" name="add-form">
 				<div class="row">
 					<p>Title</p>
-					<input type="text" name="title" value="<?php echo $title;?>">
-					<?php echo $errorTitle; ?>
+					<input type="text" name="title" value="<?= $title;?>">
+					<?= $errorTitle; ?>
 				</div>
 				
 				<div class="row">
 					<p>Description</p>
-					<textarea name="description" rows="5" cols="100"><?php echo $description;?></textarea>
-					<?php echo $errorDescription?>
+					<textarea name="description" rows="5" cols="100"><?= $description;?></textarea>
+					<?= $errorDescription?>
 				</div>
-				
+				<div class="row">
+					<p>Image</p>
+					<p style="width : 400px"><img src="<?= DIR_IMAGES.$image;?>" style="width:100%" alt="Hinh loi"></p>
+				</div>
 				<div class="row">
 					<input type="submit" value="Save" name="submit">
 					<input type="button" value="Cancel" name="cancel" id="cancel-button">

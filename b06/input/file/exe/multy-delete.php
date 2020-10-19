@@ -8,9 +8,14 @@
 </head>
 <body>
 <?php
+	require_once('define.php');
 	$checkbox	= $_POST['checkbox'];
 	if(!empty($checkbox)){
 		foreach($checkbox as $key => $value){
+			$content = file_get_contents(DIR_FILES.$value.'.txt');
+			$content = explode('||',$content);
+			$image   = $content[2];
+			@unlink(DIR_IMAGES.$image);
 			@unlink("./files/$value.txt");
 		}
 	}
