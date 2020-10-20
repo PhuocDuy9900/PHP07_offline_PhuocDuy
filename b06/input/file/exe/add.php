@@ -38,9 +38,16 @@
 
 		// A-Z, a-z, 0-9: AzG09
 		if ($errorTitle == '' && $errorDescription == '') {
-			$data	= $title . '||' . $description;
-
 			$name = randomString(5);
+			if (isset($_FILES['image'])) {
+				$image_name 	= $_FILES['image']['name'];
+				$image_tmp 		= $_FILES['image']['tmp_name'];
+				$image_ext		= strtolower(end(explode('.',$_FILES['image']['name'])));
+				$image_name     = "$name.$image_ext";
+				move_uploaded_file($image_tmp, DIR_IMAGES . $image_name);
+			}
+			
+			$data	= $title . '||' . $description . '||' . $image_name;
 			$filename	= DIR_FILES . $name . '.txt';
 			if (file_put_contents($filename, $data)) {
 				$title			= '';
@@ -48,12 +55,13 @@
 				$flag			= true;
 			}
 		}
+		
 	}
 	?>
 	<div id="wrapper">
 		<div class="title">PHP FILE - ADD</div>
 		<div id="form">
-			<form action="#" method="post" name="add-form">
+			<form action="#" method="post" name="add-form" enctype="multipart/form-data">
 				<div class="row">
 					<p>Title</p>
 					<input type="text" name="title" value="<?= $title; ?>">
@@ -64,6 +72,11 @@
 					<p>Description</p>
 					<textarea name="description" rows="5" cols="100"><?= $description; ?></textarea>
 					<?= $errorDescription ?>
+				</div>
+
+				<div class="row">
+					<p>Image</p>
+					<input type="file" name="image">
 				</div>
 
 				<div class="row">

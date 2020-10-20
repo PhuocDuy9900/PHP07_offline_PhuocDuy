@@ -25,27 +25,34 @@
 	$description		= $content[1];
 	$image				= $content[2];
 	$flag	= false;
-	if(isset($_POST['title']) && isset($_POST['description'])){
+	if (isset($_POST['title']) && isset($_POST['description'])) {
 		$title			= $_POST['title'];
 		$description	= $_POST['description'];
-		
+
 		// Error Title
 		$errorTitle = '';
-		if(checkEmpty($title)) 			$errorTitle = '<p class="error">Dữ liệu không được rỗng</p>';
-		if(checkLength($title, 5, 100)) $errorTitle .= '<p class="error">Tiêu đề dài từ 5 đến 100 ký tự</p>';
-		
+		if (checkEmpty($title)) 			$errorTitle = '<p class="error">Dữ liệu không được rỗng</p>';
+		if (checkLength($title, 5, 100)) 	$errorTitle .= '<p class="error">Tiêu đề dài từ 5 đến 100 ký tự</p>';
+
 		// Error Description
 		$errorDescription = '';
-		if(checkEmpty($description)) 			$errorDescription = '<p class="error">Dữ liệu không được rỗng</p>';
-		if(checkLength($description, 10, 5000)) $errorDescription .= '<p class="error">Nội dung dài từ 10 đến 5000 ký tự</p>';
-		
-		
+		if (checkEmpty($description)) 			$errorDescription = '<p class="error">Dữ liệu không được rỗng</p>';
+		if (checkLength($description, 10, 5000)) $errorDescription .= '<p class="error">Nội dung dài từ 10 đến 5000 ký tự</p>';
+
+
 		// A-Z, a-z, 0-9: AzG09
-		if($errorTitle == '' && $errorDescription == ''){
-			$data	= $title . '||' . $description . '||' .$image;
+		if ($errorTitle == '' && $errorDescription == '') {
+			if (isset($_FILES['image'])) {
+				$image_name 	= $_FILES['image']['name'];
+				$image_tmp 		= $_FILES['image']['tmp_name'];
+				$image_ext		= strtolower(end(explode('.',$_FILES['image']['name'])));
+				$image_name     = "$id.$image_ext";
+				move_uploaded_file($image_tmp, DIR_IMAGES . $image_name);
+			}
 			
+			$data	= $title . '||' . $description . '||' . $image_name;
 			$filename	= DIR_FILES . $id . '.txt';
-			if(file_put_contents($filename, $data)){
+			if (file_put_contents($filename, $data)) {
 				$title			= '';
 				$description	= '';
 				$flag			= true;
@@ -57,7 +64,7 @@
 	<div id="wrapper">
     	<div class="title">PHP FILE - ADD</div>
         <div id="form">   
-			<form action="#" method="post" name="add-form">
+			<form action="#" method="post" name="add-form" enctype="multipart/form-data">
 				<div class="row">
 					<p>Title</p>
 					<input type="text" name="title" value="<?= $title;?>">
@@ -71,8 +78,13 @@
 				</div>
 				<div class="row">
 					<p>Image</p>
-					<p style="width : 400px"><img src="<?= DIR_IMAGES.$image;?>" style="width:100%" alt="Hinh loi"></p>
+					<p style="width : 400px"><img src="<?=DIR_IMAGES.$image?>" style="width:100%" alt="Hinh loi"></p>
 				</div>
+				<div class="row">
+					<p>Image</p>
+					<input type="file" name="image">
+				</div>
+				
 				<div class="row">
 					<input type="submit" value="Save" name="submit">
 					<input type="button" value="Cancel" name="cancel" id="cancel-button">
