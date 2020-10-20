@@ -1,25 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<title>PHP FILE - ADD</title>
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#cancel-button').click(function(){
-			window.location = 'index.php';
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<title>PHP FILE - ADD</title>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#cancel-button').click(function() {
+				window.location = 'index.php';
+			});
 		});
-	});
-</script>
+	</script>
 </head>
+
 <body>
-<?php
+	<?php
 	require_once 'define.php';
 	require_once 'functions.php';
 	error_reporting(E_ALL & ~E_NOTICE);
 	$id	= $_GET['id'];
-	$content	= file_get_contents(DIR_FILES."$id.txt");
+	$content	= file_get_contents(DIR_FILES . "$id.txt");
 	$content	= explode('||', $content);
 	$title				= $content[0];
 	$description		= $content[1];
@@ -45,11 +47,11 @@
 			if (isset($_FILES['image'])) {
 				$image_name 	= $_FILES['image']['name'];
 				$image_tmp 		= $_FILES['image']['tmp_name'];
-				$image_ext		= strtolower(end(explode('.',$_FILES['image']['name'])));
+				$image_ext		= strtolower(end(explode('.', $_FILES['image']['name'])));
 				$image_name     = "$id.$image_ext";
 				move_uploaded_file($image_tmp, DIR_IMAGES . $image_name);
 			}
-			
+
 			$data	= $title . '||' . $description . '||' . $image_name;
 			$filename	= DIR_FILES . $id . '.txt';
 			if (file_put_contents($filename, $data)) {
@@ -58,45 +60,45 @@
 				$flag			= true;
 			}
 		}
-		
 	}
-?>
+	?>
 	<div id="wrapper">
-    	<div class="title">PHP FILE - ADD</div>
-        <div id="form">   
+		<div class="title">PHP FILE - ADD</div>
+		<div id="form">
 			<form action="#" method="post" name="add-form" enctype="multipart/form-data">
 				<div class="row">
 					<p>Title</p>
-					<input type="text" name="title" value="<?= $title;?>">
+					<input type="text" name="title" value="<?= $title; ?>">
 					<?= $errorTitle; ?>
 				</div>
-				
+
 				<div class="row">
 					<p>Description</p>
-					<textarea name="description" rows="5" cols="100"><?= $description;?></textarea>
-					<?= $errorDescription?>
+					<textarea name="description" rows="5" cols="100"><?= $description; ?></textarea>
+					<?= $errorDescription ?>
 				</div>
 				<div class="row">
 					<p>Image</p>
-					<p style="width : 400px"><img src="<?=DIR_IMAGES.$image?>" style="width:100%" alt="Hinh loi"></p>
+					<p style="width : 400px"><img src="<?= DIR_IMAGES . $image ?>" style="width:100%" alt="Hinh loi"></p>
 				</div>
 				<div class="row">
 					<p>Image</p>
 					<input type="file" name="image">
 				</div>
-				
+
 				<div class="row">
 					<input type="submit" value="Save" name="submit">
 					<input type="button" value="Cancel" name="cancel" id="cancel-button">
 				</div>
-				
+
 				<?php
-					if($flag==true) echo '<div class="row"><p>Dữ liệu đã được ghi thành công!</p></div>'; 
+				if ($flag == true) echo '<div class="row"><p>Dữ liệu đã được ghi thành công!</p></div>';
 				?>
-								
-			</form>    
-        </div>
-        
-    </div>
+
+			</form>
+		</div>
+
+	</div>
 </body>
+
 </html>
