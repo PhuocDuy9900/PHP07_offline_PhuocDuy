@@ -24,6 +24,10 @@
 	if (isset($_POST['title']) && isset($_POST['description'])) {
 		$title			= $_POST['title'];
 		$description	= $_POST['description'];
+		$fileUpload		= $_FILES['image'];
+
+		$configs = parse_ini_file('config.ini');
+
 
 		// Error Title
 		$errorTitle = '';
@@ -32,30 +36,35 @@
 
 		// Error Description
 		$errorDescription = '';
-		if (checkEmpty($description)) 			$errorDescription = '<p class="error">Dữ liệu không được rỗng</p>';
+		if (checkEmpty($description)) 			 $errorDescription = '<p class="error">Dữ liệu không được rỗng</p>';
 		if (checkLength($description, 10, 5000)) $errorDescription .= '<p class="error">Nội dung dài từ 10 đến 5000 ký tự</p>';
 
+		// Error Title
+		$errorImage = '';
+		if (empty($fileUpload['name'])) {
+			$errorImage = '<p class="error">Chưa có hình ảnh</p>';
+		} else {
+			// Kiem tra size, extention
+			$flagSize 		= checkSize($fileUpload['size'], $configs['min_size'], $configs['max_size']);
+			$flagExtension 	= checkExtension($fileUpload['name'], explode('|', $configs['extension']));
+
+			if (!$flagSize) 		$errorImage .= '<p class="error">Dung lượng hình ảnh không hợp lệ</p>';
+			if (!$flagExtension) $errorImage .= '<p class="error">Extention không hợp lệ</p>';
+		}
 
 		// A-Z, a-z, 0-9: AzG09
-		if ($errorTitle == '' && $errorDescription == '') {
-			$name = randomString(5);
-			if (isset($_FILES['image'])) {
-				$image_name 	= $_FILES['image']['name'];
-				$image_tmp 		= $_FILES['image']['tmp_name'];
-				$image_ext		= strtolower(end(explode('.',$_FILES['image']['name'])));
-				$image_name     = "$name.$image_ext";
-				move_uploaded_file($image_tmp, DIR_IMAGES . $image_name);
-			}
-			
-			$data	= $title . '||' . $description . '||' . $image_name;
+		if ($errorTitle == '' && $errorDescription == '' && $errorImage == '') {
+			$name 		= randomString(5);
+			$imageName  = randomStringFile($fileUpload['name'],7);
+			$data		= $title . '||' . $description . '||' . $imageName;
 			$filename	= DIR_FILES . $name . '.txt';
+			move_uploaded_file($fileUpload['tmp_name'],DIR_IMAGES.$imageName);
 			if (file_put_contents($filename, $data)) {
 				$title			= '';
 				$description	= '';
 				$flag			= true;
 			}
 		}
-		
 	}
 	?>
 	<div id="wrapper">
@@ -64,7 +73,7 @@
 			<form action="#" method="post" name="add-form" enctype="multipart/form-data">
 				<div class="row">
 					<p>Title</p>
-					<input type="text" name="title" value="<?= $title; ?>">
+					<input type="text" name="title" value="<?= $title?>">
 					<?= $errorTitle; ?>
 				</div>
 
@@ -77,6 +86,7 @@
 				<div class="row">
 					<p>Image</p>
 					<input type="file" name="image">
+					<?= $errorImage ?>
 				</div>
 
 				<div class="row">

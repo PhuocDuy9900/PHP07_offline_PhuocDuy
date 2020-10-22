@@ -30,6 +30,10 @@
 	if (isset($_POST['title']) && isset($_POST['description'])) {
 		$title			= $_POST['title'];
 		$description	= $_POST['description'];
+		$fileUpload		= $_FILES['image'];
+
+		$configs = parse_ini_file('config.ini');
+
 
 		// Error Title
 		$errorTitle = '';
@@ -38,25 +42,35 @@
 
 		// Error Description
 		$errorDescription = '';
-		if (checkEmpty($description)) 			$errorDescription = '<p class="error">Dữ liệu không được rỗng</p>';
+		if (checkEmpty($description)) 			 $errorDescription = '<p class="error">Dữ liệu không được rỗng</p>';
 		if (checkLength($description, 10, 5000)) $errorDescription .= '<p class="error">Nội dung dài từ 10 đến 5000 ký tự</p>';
 
+		// Error Title
+		$errorImage = '';
+		$flagChangImage = false;
+		if (!empty($fileUpload['name'])) {
+			$flagChangImage = true;
+			// Kiem tra size, extention
+			$flagSize 		= checkSize($fileUpload['size'], $configs['min_size'], $configs['max_size']);
+			$flagExtension 	= checkExtension($fileUpload['name'], explode('|', $configs['extension']));
+
+			if (!$flagSize)      $errorImage .= '<p class="error">Dung lượng hình ảnh không hợp lệ</p>';
+			if (!$flagExtension) $errorImage .= '<p class="error">Extention không hợp lệ</p>';
+		}
 
 		// A-Z, a-z, 0-9: AzG09
-		if ($errorTitle == '' && $errorDescription == '') {
-			if (isset($_FILES['image'])) {
-				$image_name 	= $_FILES['image']['name'];
-				$image_tmp 		= $_FILES['image']['tmp_name'];
-				$image_ext		= strtolower(end(explode('.', $_FILES['image']['name'])));
-				$image_name     = "$id.$image_ext";
-				move_uploaded_file($image_tmp, DIR_IMAGES . $image_name);
+		if ($errorTitle == '' && $errorDescription == '' && $errorImage == '') {
+			if ($flagChangImage) {
+				$imageNew   = randomStringFile($fileUpload['name'], 7);
+				$data		= $title . '||' . $description . '||' . $imageNew;
+				move_uploaded_file($fileUpload['tmp_name'], DIR_IMAGES . $imageNew);
+				unlink(DIR_IMAGES.$image);
+				$image = $imageNew;	
+			} else {
+				$data		= $title . '||' . $description . '||' . $image;
 			}
-
-			$data	= $title . '||' . $description . '||' . $image_name;
 			$filename	= DIR_FILES . $id . '.txt';
 			if (file_put_contents($filename, $data)) {
-				$title			= '';
-				$description	= '';
 				$flag			= true;
 			}
 		}
