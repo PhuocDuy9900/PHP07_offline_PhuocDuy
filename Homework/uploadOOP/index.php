@@ -8,7 +8,7 @@
 <body>
 	<div class="content">
 		<h1>PHP Upload</h1>
-		<form action="upload-02.php" method="post" name="main-form" id="main-form" enctype="multipart/form-data">
+		<form action="proccess.php" method="post" name="main-form" id="main-form" enctype="multipart/form-data">
 			<input type="file" name="file-upload"/>
 			<input type="submit" value="Submit" name="submit"/>
 		</form>
