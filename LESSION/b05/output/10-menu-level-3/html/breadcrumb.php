@@ -25,6 +25,15 @@ switch ($lengthBreadCrumb) {
         <span>%s</span>', $currentBreadCrumb[0]['link'], $currentBreadCrumb[0]['name'], $currentBreadCrumb[1]['name']);
         break;
     case 3:
+        $xhtmlBreadCrumb = sprintf('
+        <a href="index.php">Home</a>
+        <span>></span>
+        <a href="%s">%s</a>
+        <span>></span>
+        <a href="%s">%s</a>
+        <span>></span>
+        <span>%s</span>', $currentBreadCrumb[0]['link'], $currentBreadCrumb[0]['name'],
+        $currentBreadCrumb[1]['link'], $currentBreadCrumb[1]['name'], $currentBreadCrumb[2]['name']);
         break;
 }
 

@@ -1,6 +1,5 @@
 <?php
 require_once('data.php');
-
 $currentBreadCrumb = $arrBreadCrumb[$menuCurrent];
 $lengthBreadCrumb = count($currentBreadCrumb);
 
