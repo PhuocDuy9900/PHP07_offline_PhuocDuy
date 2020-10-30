@@ -1,0 +1,6 @@
+DirectoryIndex login.php
+Options -Indexes
+<filesmatch "users.ini">
+    order allow,deny
+    deny from all
+</filesmatch>

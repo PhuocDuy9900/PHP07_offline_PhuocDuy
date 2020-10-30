@@ -1,0 +1,20 @@
+[
+    {
+        "username": "admin",
+        "password": "e10adc3949ba59abbe56e057f20f883e",
+        "fullname": "Duy Tran",
+        "role"    : "admin"
+    },
+    {
+        "username": "admin1",
+        "password": "e10adc3949ba59abbe56e057f20f883e",
+        "fullname": "Duy Tran2",
+        "role"    : "member"
+    },
+    {
+        "username": "admin2",
+        "password": "e10adc3949ba59abbe56e057f20f883e",
+        "fullname": "Duy Tran3",
+        "role"    : "member"
+    }
+]
