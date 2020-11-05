@@ -1,6 +1,6 @@
 DirectoryIndex login.php
 Options -Indexes
-<filesmatch "users.ini">
+<filesmatch "users.json">
     order allow,deny
     deny from all
 </filesmatch>
