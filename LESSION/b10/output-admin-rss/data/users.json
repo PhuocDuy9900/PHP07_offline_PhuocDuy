@@ -1,0 +1,14 @@
+[
+    {
+        "username": "admin",
+        "password": "e10adc3949ba59abbe56e057f20f883e",
+        "fullname": "Linh Nguyen",
+        "role": "admin"
+    },
+    {
+        "username": "linh",
+        "password": "e10adc3949ba59abbe56e057f20f883e",
+        "fullname": "John Smith",
+        "role": "member"
+    }
+]
